@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  date: 2021-12-10
+  time: 2021-12-10 18:40:44
+  tag: MyString
+  completed: false
+  task: one
+
+two:
+  title: MyString
+  description: MyString
+  date: 2021-12-10
+  time: 2021-12-10 18:40:44
+  tag: MyString
+  completed: false
+  task: two

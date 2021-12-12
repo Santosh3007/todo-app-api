@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_10_110122) do
+ActiveRecord::Schema.define(version: 2021_12_11_041841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,25 +18,24 @@ ActiveRecord::Schema.define(version: 2021_12_10_110122) do
   create_table "subtasks", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.date "date"
-    t.time "time"
     t.string "tag"
     t.boolean "completed"
     t.bigint "task_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deadline"
     t.index ["task_id"], name: "index_subtasks_on_task_id"
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.date "date"
-    t.time "time"
     t.string "tag"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "completed"
+    t.string "tagColor"
+    t.datetime "deadline"
   end
 
   add_foreign_key "subtasks", "tasks"

@@ -1,4 +1,4 @@
-class SubtasksController < ApplicationController
+class Api::V1::SubtasksController < ApplicationController
   before_action :set_subtask, only: [:show, :update, :destroy]
 
   # GET /subtasks
@@ -18,7 +18,7 @@ class SubtasksController < ApplicationController
     @subtask = Subtask.new(subtask_params)
 
     if @subtask.save
-      render json: @subtask, status: :created, location: @subtask
+      render json: @subtask, status: :created, location: api_v1_subtasks_path(@subtask)
     else
       render json: @subtask.errors, status: :unprocessable_entity
     end

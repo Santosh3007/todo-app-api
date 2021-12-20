@@ -46,6 +46,6 @@ class Api::V1::SubtasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def subtask_params
-      params.require(:subtask).permit(:title, :description, :date, :time, :tag, :completed, :task_id)
+      params.require(:subtask).permit(:title, :description, :date, :time, :tag, :completed, :task_id, :deadline)
     end
 end

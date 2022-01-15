@@ -3,7 +3,7 @@ class Api::V1::TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
 
     render json: @tasks
   end
@@ -15,7 +15,7 @@ class Api::V1::TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     if @task.save
       render json: @task, status: :created, location: api_v1_tasks_path(@task)
@@ -46,6 +46,6 @@ class Api::V1::TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :description, :date, :time, :tag, :deadline, :completed) #ADD ALL REQUIRED PARAMS IN REQUIRED
+      params.require(:task).permit(:title, :description, :date, :time, :tag, :deadline, :completed,:user_id) #ADD ALL REQUIRED PARAMS IN REQUIRED
     end
 end

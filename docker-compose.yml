@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  db:
+    image: "postgres:12.9-alpine"
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+  web:
+    image: "santosh3007/todo-app-api:1.0"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_HOST=db
+    depends_on:
+      - "db"
+
+volumes:
+  postgres:

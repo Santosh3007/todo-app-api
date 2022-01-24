@@ -11,7 +11,7 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
 
   web:
-    image: "santosh3007/todo-app-api:1.0"
+    build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
     ports:
       - "3001:3001"

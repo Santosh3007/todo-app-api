@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   # POST /users
   def create
     if User.exists?(email: user_params[:email])
-        render json: {message: "Account already exists"}, status: :existing_account #Status anyhow check if got error
+        render json: {message: "Account already exists"}, status: :bad_request
     else
         @user = User.new(user_params)
         if @user.save
@@ -31,9 +31,19 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render json: {message: "Account Updated"}, status: :updated #status anyhow, if error use ok
+      render json: {message: "Account Updated"}, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  # POST /change_password
+  def update_password
+    if current_user.authenticate(params[:old_password])
+      current_user.update(user_password_params)
+      render json: {message: "Password Changed"}, status: :ok
+    else
+      render json: {message: "Incorrect Password"}, status: :bad_request
     end
   end
 
@@ -57,5 +67,13 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation) #ADD ALL REQUIRED PARAMS IN REQUIRED
+    end
+
+    def user_detail_params
+      params.require(:user).permit(:name, :email)
+    end
+
+    def user_password_params
+      params.permit(:password, :password_confirmation)
     end
 end

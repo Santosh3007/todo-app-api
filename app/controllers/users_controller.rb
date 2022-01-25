@@ -2,17 +2,6 @@ class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
   before_action :set_user, only: [:show, :update, :destroy]
 
-  # GET /users      //Remove this, not necessary
-  def index
-    @users = User.all
-    render json: @users
-  end
-
-  # GET /users/1
-  def show
-    render json: @user
-  end
-
   # POST /users
   def create
     if User.exists?(email: user_params[:email])

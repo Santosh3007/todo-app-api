@@ -1,0 +1,17 @@
+AllCops:
+  # Only run rubocop on files that have been fixed. As we literally have >9000
+  # errors, we can't fix everything at once. Once directories are fixed, add
+  # them to the list.
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - db/migrate/*
+    - db/schema.rb
+    - bin/**/*
+
+## Style
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false

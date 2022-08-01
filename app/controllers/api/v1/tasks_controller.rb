@@ -4,12 +4,28 @@ module Api
   module V1
     class TasksController < ApplicationController
       before_action :set_task, only: %i[show update destroy]
-
       # GET /tasks
       def index
         @tasks = current_user.tasks
+        render json: tasks_with_subtasks(@tasks)
+      end
 
-        render json: @tasks
+      # GET /tasks/completed
+      def completed
+        completed_tasks = current_user.tasks.completed
+        render json: tasks_with_subtasks(completed_tasks)
+      end
+
+      # GET /tasks/incomplete
+      def incomplete
+        incomplete_tasks = current_user.tasks.incomplete
+        render json: tasks_with_subtasks(incomplete_tasks)
+      end
+
+      # GET /tasks/incomplete
+      def overdue
+        overdue_tasks = current_user.tasks.overdue
+        render json: overdue_tasks
       end
 
       # GET /tasks/1
@@ -54,6 +70,32 @@ module Api
         # ADD ALL REQUIRED PARAMS IN REQUIRED
         params.require(:task)
               .permit(:title, :description, :date, :time, :tag, :deadline, :completed, :user_id)
+      end
+
+      def tasks_with_subtasks(tasks)
+        tasks.map do |task|
+          subtasks = task.subtasks.map do |subtask|
+            {
+              id: subtask.id,
+              title: subtask.title,
+              description: subtask.description,
+              completed: subtask.completed,
+              tag: subtask.tag,
+              deadline: subtask.deadline
+            }
+          end
+
+          {
+            id: task.id,
+            title: task.title,
+            description: task.description,
+            tag: task.tag,
+            completed: task.completed,
+            deadline: task.deadline,
+            tagColor: task.tagColor,
+            subtasks: subtasks
+          }
+        end
       end
     end
   end

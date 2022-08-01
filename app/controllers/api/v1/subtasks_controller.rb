@@ -17,6 +17,24 @@ module Api
         render json: @subtask
       end
 
+      # GET /subtasks/completed
+      def completed
+        completed_subtasks = current_user.subtasks.completed
+        render json: completed_subtasks
+      end
+
+      # GET /subtasks/incomplete
+      def incomplete
+        incomplete_subtasks = current_user.subtasks.incomplete
+        render json: incomplete_subtasks
+      end
+
+      # GET /subtasks/incomplete
+      def overdue
+        overdue_subtasks = current_user.subtasks.overdue
+        render json: overdue_subtasks
+      end
+
       # POST /subtasks
       def create
         @subtask = Subtask.new(subtask_params)

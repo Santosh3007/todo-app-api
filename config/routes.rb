@@ -8,6 +8,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :subtasks
+      get 'tasks/completed' => 'tasks#completed'
+      get 'tasks/incomplete' => 'tasks#incomplete'
+      get 'tasks/overdue' => 'tasks#overdue'
+      get 'subtasks/completed' => 'subtasks#completed'
+      get 'subtasks/incomplete' => 'subtasks#incomplete'
+      get 'subtasks/overdue' => 'subtasks#overdue'
       resources :tasks
     end
   end
